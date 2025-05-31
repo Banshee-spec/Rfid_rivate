@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Banshee University - RFID Profile Display</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #f8f8f8;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    #profile-img {
+      width: 600px;
+      height: auto;
+      margin-top: 20px;
+      border: 5px solid #2a5934;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Banshee University RFID Student Profile</h1>
+  <img id="profile-img" src="images/ID BACKGROUND.png" alt="Standby Image" />
+  <script>
+    const ws = new WebSocket("ws://localhost:8080");
+
+    const imageMap = {
+      "05546E05": "ID STUDENT - PHIERRE VINCENT.png",
+      "03F2B811": "ID STUDENT - TUTATS.png"
+    };
+
+    ws.onmessage = (event) => {
+      const uid = event.data.trim();
+      const imgFile = imageMap[uid] || "ID BACKGROUND.png";
+      document.getElementById("profile-img").src = "images/" + imgFile;
+    };
+  </script>
+</body>
+</html>
